@@ -27,7 +27,14 @@ const useCanvas = (
       const ctx = canvas.getContext("2d");
       if (!ctx) return;
 
-      if (clickedEvent === null || currentTime !== clickedEvent) {
+      const tolerance = 0.01;
+
+      const roundedCurrentTime = Math.round(currentTime * 1000) / 1000;
+
+      if (
+        clickedEvent === null ||
+        Math.abs(roundedCurrentTime - clickedEvent) > tolerance
+      ) {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
       }
 
@@ -36,12 +43,16 @@ const useCanvas = (
       const scaleX = canvas.width / videoWidth;
       const scaleY = canvas.height / videoHeight;
 
-      const activeEvents = events.filter(
-        (event) =>
-          currentTime >= event.timestamp &&
-          currentTime <= event.timestamp + event.duration
-      );
+      const activeEvents = events.filter((event) => {
+        const roundedEventTimestamp = Math.round(event.timestamp * 1000) / 1000;
+        const endTime = roundedEventTimestamp + event.duration;
+        return (
+          roundedCurrentTime >= roundedEventTimestamp - tolerance &&
+          roundedCurrentTime <= endTime + tolerance
+        );
+      });
 
+      // Рисуем активные события
       activeEvents.forEach(({ x, y, width, height }) => {
         ctx.strokeStyle = "rgb(30, 255, 0)";
         ctx.lineWidth = 4;
