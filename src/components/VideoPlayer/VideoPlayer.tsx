@@ -10,7 +10,7 @@ const VideoPlayer = () => {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [currentTime, setCurrentTime] = useState(0);
-  const [clickedEvent, setClickedEvent] = useState<number | null>(null);
+  const [clickedEvent] = useState<number | null>(null);
   const dispatch = useDispatch();
   const events = useSelector(selectEvents);
 
@@ -22,15 +22,16 @@ const VideoPlayer = () => {
 
   const handleTimeUpdate = () => {
     if (videoRef.current) {
-      setCurrentTime(videoRef.current.currentTime);
+      const currentTime = Number(videoRef.current.currentTime.toFixed(3));
+      setCurrentTime(currentTime);
     }
   };
 
   const handleEventClick = (timestamp: number) => {
+    const roundedTimestamp = Number(timestamp.toFixed(3));
+    setCurrentTime(roundedTimestamp);
     if (videoRef.current) {
-      videoRef.current.currentTime = timestamp;
-      setCurrentTime(timestamp);
-      setClickedEvent(timestamp);
+      videoRef.current.currentTime = roundedTimestamp;
     }
   };
 
@@ -43,7 +44,6 @@ const VideoPlayer = () => {
           controls
           onTimeUpdate={handleTimeUpdate}
           className="video-element"
-          data-testid="video-element"
         />
         <Canvas
           videoRef={videoRef}
