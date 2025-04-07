@@ -7,9 +7,17 @@ interface EventListProps {
 }
 
 const EventList = ({ events, currentTime, onEventClick }: EventListProps) => {
-  const isActive = (event: { timestamp: number; duration: number }) =>
-    currentTime >= event.timestamp &&
-    currentTime <= event.timestamp + event.duration;
+  const isActive = (event: { timestamp: number; duration: number }) => {
+    const tolerance = 0.01;
+    const roundedCurrentTime = Math.round(currentTime * 1000) / 1000;
+    const roundedEventTimestamp = Math.round(event.timestamp * 1000) / 1000;
+    const endTime = roundedEventTimestamp + event.duration;
+
+    return (
+      roundedCurrentTime >= roundedEventTimestamp - tolerance &&
+      roundedCurrentTime <= endTime + tolerance
+    );
+  };
 
   const sortedEvents = [...events].sort((a, b) => a.timestamp - b.timestamp);
 
