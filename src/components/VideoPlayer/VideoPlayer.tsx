@@ -33,12 +33,12 @@ const VideoPlayer: React.FC = () => {
     height: 0,
   });
 
-  // Инициализация данных
+ 
   useEffect(() => {
     dispatch(fetchEventsRequest());
   }, [dispatch]);
 
-  // Настройка ResizeObserver
+
   useEffect(() => {
     const observer = new ResizeObserver((entries) => {
       const entry = entries[0];
@@ -56,7 +56,7 @@ const VideoPlayer: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Обработчики видео
+
   const handleTimeUpdate = useCallback(() => {
     const video = videoRef.current;
     if (!video) return;
@@ -91,7 +91,7 @@ const VideoPlayer: React.FC = () => {
     });
   };
 
-  // Расчет масштаба
+
   const scaleX = containerSize.width / originalVideoSize.width;
   const scaleY = containerSize.height / originalVideoSize.height;
 
