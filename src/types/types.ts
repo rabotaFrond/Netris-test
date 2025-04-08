@@ -1,4 +1,4 @@
-//store/types.ts
+
 export interface Event {
   timestamp: number;
   duration: number;
