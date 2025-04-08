@@ -1,4 +1,4 @@
-// sagas.ts
+
 import {
   call,
   put,
@@ -13,7 +13,7 @@ import {
 } from "./eventsTypes";
 import { Event } from "../types/types";
 
-const API_URL = "/events.json"; //норм ссылка
+const API_URL = "/events.json"; //тут будет норм ссылка
 
 export function* fetchEventsSaga(): Generator<CallEffect | PutEffect> {
   try {
