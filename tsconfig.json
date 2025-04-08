@@ -13,8 +13,8 @@
     "moduleResolution": "Node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "types": ["@testing-library/jest-dom"],
-    "baseUrl": "src" // Включаем baseUrl для абсолютных путей
+    "types": ["@testing-library/jest-dom", "jest", "node"],
+    "baseUrl": "src" //
   },
   "include": ["src"]
 }
